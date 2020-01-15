@@ -1,53 +1,30 @@
 exports.config = {
 
-    testobject_dc: 'eu',
+    region: 'eu',
     specs: [
 	    './tests/**/*.js'
     ],
+    
+    connectionRetryCount: 0,
 
-    exclude: [
-        // 'path/to/excluded/files'
-    ],
-    //
-    // ============
-    // Capabilities
-    // ============
-    // Define your capabilities here. WebdriverIO can run multiple capabilities at the same
-    // time. Depending on the number of capabilities, WebdriverIO launches several test
-    // sessions. Within your capabilities you can overwrite the spec and exclude options in
-    // order to group specific specs to a specific capability.
-    //
-    // First, you can define how many instances should be started at the same time. Let's
-    // say you have 3 different capabilities (Chrome, Firefox, and Safari) and you have
-    // set maxInstances to 1; wdio will spawn 3 processes. Therefore, if you have 10 spec
-    // files and you set maxInstances to 10, all spec files will get tested at the same time
-    // and 30 processes will get spawned. The property handles how many capabilities
-    // from the same test should run tests.
-    //
-    maxInstances: 40,
-    //
-    // If you have trouble getting all important capabilities together, check out the
-    // Sauce Labs platform configurator - a great tool to configure your capabilities:
-    // https://docs.saucelabs.com/reference/platforms-configurator
-    //
-    capabilities: [{
-        // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-        // grid with only 5 firefox instance available you can make sure that not more than
-        // 5 instance gets started at a time.
-        //maxInstances: 1,
-        //
-
-      browserName: '',
-      simpleIsVisibleCheck: false,
-      autoWebview: true,
-      autoWebviewTimeout: 20000,
-      testobject_api_key: 'YOUR_API_KEY',
-      version: '12',
-      platformName: 'iOS',
-      name: 'My First Mobile Test',
-      automationName: 'XCUITest'
-      // nativeWebTap: true
-
+    capabilities: [
+    {
+        testobject_api_key: process.env.RDC_API_KEY,
+        platformVersion: '8',
+        platformName: 'Android',
+        // testobject_device: 'Samsung_Galaxy_S10_POC06',
+        cacheId: 'cache1',
+        phoneOnly: 'true',
+        maxInstances: 1,
+    },
+    {
+        testobject_api_key: process.env.RDC_API_KEY,
+        platformVersion: '9',
+        platformName: 'Android',
+        // testobject_device: 'Samsung_Galaxy_S9_POC24',
+        cacheId: 'cache2',
+        phoneOnly: 'true',
+        maxInstances: 1,
     }],
     //
     // ===================
@@ -66,46 +43,14 @@ exports.config = {
     // Enables colors for log output.
     coloredLogs: true,
     //
-    // Saves a screenshot to a given path if a command fails.
-    screenshotPath: './errorShots/',
-    //
-    // Set a base URL in order to shorten url command calls. If your url parameter starts
-    // with "/", then the base url gets prepended.
-    baseUrl: 'http://saucelabs.github.io',
-    //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
-    //
-    // Default timeout in milliseconds for request
-    // if Selenium Grid doesn't send response
-    connectionRetryTimeout: 90000,
-    //
-    // Default request retries count
-    connectionRetryCount: 3,
-    //
-    // Initialize the browser instance with a WebdriverIO plugin. The object should have the
-    // plugin name as key and the desired plugin options as properties. Make sure you have
-    // the plugin installed before running any tests. The following plugins are currently
-    // available:
-    // WebdriverCSS: https://github.com/webdriverio/webdrivercss
-    // WebdriverRTC: https://github.com/webdriverio/webdriverrtc
-    // Browserevent: https://github.com/webdriverio/browserevent
-    // plugins: {
-    //     webdrivercss: {
-    //         screenshotRoot: 'my-shots',
-    //         failedComparisonsRoot: 'diffs',
-    //         misMatchTolerance: 0.05,
-    //         screenWidth: [320,480,640,1024]
-    //     },
-    //     webdriverrtc: {},
-    //     browserevent: {}
-    // },
-    //
+
     // Test runner services
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['saucerdc'],
+    services: ['sauce'],
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: http://webdriver.io/guide/testrunner/frameworks.html
@@ -126,10 +71,10 @@ exports.config = {
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
     //
-
     mochaOpts: {
         ui: 'bdd'
     },
+
     // =====
     // Hooks
     // =====
